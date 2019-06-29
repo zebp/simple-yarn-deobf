@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+version = '0.1.0'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'https://maven.fabricmc.net/'
+    }
+}
+
+dependencies {
+    compile 'net.fabricmc:tiny-remapper:0.1.0.36'
+    compile 'com.google.guava:guava:27.1-jre'
+    compile 'net.sf.jopt-simple:jopt-simple:5.0.4'
+    compile 'net.fabricmc:stitch:0.1.2.51'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'website.zeb.deobf.SimpleYarnMain'
+    }
+ 
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

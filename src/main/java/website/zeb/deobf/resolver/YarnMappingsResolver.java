@@ -1,0 +1,51 @@
+package website.zeb.deobf.resolver;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.zip.GZIPInputStream;
+
+import net.fabricmc.stitch.commands.CommandProposeFieldNames;
+
+/**
+ * @author Zeb
+ * @since 0.1.0
+ */
+public class YarnMappingsResolver {
+
+    public static Path resolve(String mappingsVersion, Path minecraftJar) throws IOException {
+        Path mappingsTemp = Files.createTempFile("mappings", mappingsVersion);
+
+        FileOutputStream outputStream = new FileOutputStream(mappingsTemp.toFile());
+
+        GZIPInputStream gzis = new GZIPInputStream(getMappingsFromMaven(mappingsVersion));
+
+        byte[] buffer = new byte[1024];
+
+        int len;
+        while ((len = gzis.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, len);
+        }
+
+        gzis.close();
+        outputStream.close();
+
+        Path mappings = Files.createTempFile("mappings", mappingsVersion);
+
+        CommandProposeFieldNames fieldNames = new CommandProposeFieldNames();
+        try {
+            fieldNames.run(new String[] { minecraftJar.normalize().toString(), mappingsTemp.toFile().getAbsolutePath(), mappings.toFile().getAbsolutePath(), "--writeAll" });
+        } catch (Exception e) {}
+
+        return mappings;
+    }
+
+    private static InputStream getMappingsFromMaven(String mappingsVersion) throws IOException {
+        URL url = new URL(String.format("https://maven.fabricmc.net/net/fabricmc/yarn/%s/yarn-%s-tiny.gz", mappingsVersion, mappingsVersion));
+        return url.openConnection().getInputStream();
+    }
+    
+}

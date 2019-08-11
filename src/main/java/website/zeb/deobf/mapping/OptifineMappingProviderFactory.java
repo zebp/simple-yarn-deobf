@@ -53,7 +53,7 @@ public class OptifineMappingProviderFactory {
             String className = matcher.group(1);
             String descriptor = matcher.group(3);
 
-            String newKey = String.format("%s/%s;;%s", className, entry.getValue(), descriptor); // The new key for the optifine entry.
+            String newKey = String.format("%s/%s;;%s", className, entry.getValue(), descriptor); // The new key for the optifine entry
             newEntries.put(newKey, entry.getValue() + "_OF");
         });
 

@@ -24,7 +24,7 @@ public class SimpleYarnMain {
       OptionSpec<MappingType> from = optionParser.accepts("from").withRequiredArg().ofType(MappingType.class);
       OptionSpec<MappingType> to = optionParser.accepts("to").withRequiredArg().ofType(MappingType.class);
 
-      OptionSet options = optionParser.parse(args);
+      OptionSet options = optionParser.parse("--input ./working/OptiFine-1.14.3_HD_U_F1.jar --output ./working/OptiFine-1.14.3_HD_U_F1.dev.jar --mappings 1.14.3+build.9 --from OFFICIAL --to NAMED".split(" "));
 
       SimpleYarnDeobfuscator.run(Paths.get(getOption(options, input)), Paths.get(getOption(options, output)), getOption(options, mappings), getOption(options, from), getOption(options, to));
    }

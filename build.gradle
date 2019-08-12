@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-version = '0.1.0'
+version = '0.1.1'
 
 repositories {
     mavenCentral()
@@ -11,10 +11,10 @@ repositories {
 }
 
 dependencies {
-    compile 'net.fabricmc:tiny-remapper:0.1.0.36'
+    compile 'net.fabricmc:tiny-remapper:0.1.0.38'
     compile 'com.google.guava:guava:27.1-jre'
     compile 'net.sf.jopt-simple:jopt-simple:5.0.4'
-    compile 'net.fabricmc:stitch:0.1.2.51'
+    compile 'net.fabricmc:stitch:0.2.1.61'
 }
 
 jar {

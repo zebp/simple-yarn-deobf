@@ -4,12 +4,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
-import java.util.Random;
 import java.util.zip.GZIPInputStream;
 
 import net.fabricmc.stitch.commands.CommandProposeFieldNames;
@@ -25,11 +23,7 @@ public class YarnMappingsResolver {
         String name = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
 
         if (name.contains("win")) {
-            byte[] array = new byte[16];
-            new Random().nextBytes(array);
-            String generatedString = new String(array, Charset.forName("UTF-8"));
-
-            mappingsTemp = Paths.get(String.format("mappings-%s.gz", generatedString));
+            mappingsTemp = Paths.get("mappings.gz");
         } else {
             mappingsTemp = Files.createTempFile("mappings", mappingsVersion);
         }
